@@ -31,8 +31,8 @@ class ThreeCarsHard(gym.Env):
     #self.single_spawn_chance=60
 
     #current values
-    self.double_spawn_chance=10
-    self.single_spawn_chance=40
+    self.double_spawn_chance=20
+    self.single_spawn_chance=60
     
     self.died=False
     self.dones = False

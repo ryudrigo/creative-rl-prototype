@@ -16,6 +16,6 @@ register(
 )
 
 register(
-    id='three-cars-pcgrl-RLlib-v0',
-    entry_point='mine_foo.envs:ThreeCarsPCGRL-RLlib',
+    id='three-cars-generator-v0',
+    entry_point='mine_foo.envs:ThreeCarsGenerator',
 )
