@@ -7,7 +7,7 @@ import os
 import time
 import random
 from difficulty_sensor import Sensor
-#from stable_baselines3 import PPO
+from stable_baselines3 import PPO
 from stable_baselines3 import PPO
 
 class ThreeCarsGenerator(gym.Env):
@@ -28,10 +28,18 @@ class ThreeCarsGenerator(gym.Env):
     self.observation_space = spaces.Box(
         low=0, high=3, shape=(self.SPACE_H, self.SPACE_W), dtype= np.int64
     )
+
     if self.generator_training:
         self.action_space = spaces.Discrete(8)
     else:
         self.action_space =spaces.Tuple((spaces.Discrete(3), spaces.Discrete(8)))
+    '''
+    if self.generator_training:
+        self.action_space = spaces.Box(low=0, high=1, shape=(self.SPACE_W,), dtype=np.int64)
+    else:
+        self.action_space =spaces.Tuple((spaces.Discrete(3), spaces.Box(low=0, high=1,
+            shape=(self.SPACE_W,), dtype=np.int64)))
+    '''
     self.solver_agent = PPO.load(solver_path)
 
     #first space(1) is player controls, 0=left, 1=wait, 2=right
@@ -42,7 +50,7 @@ class ThreeCarsGenerator(gym.Env):
     self.reward = 1 # for the player
     self.total_steps=0
     self.lives = 4
-    self.intended_difficulty=0.25
+    self.intended_difficulty=0.30
     #self.intended_difficulty=0.010
     #self.intended_difficulty=0.005
     #self.intended_difficulty=0.001
@@ -70,6 +78,7 @@ class ThreeCarsGenerator(gym.Env):
 
     #update state with generator action
     #new_spawn = np.expand_dims(action, 0)
+
     if action ==0:
         new_spawn= np.array([[0,0,0]])
     if action ==1:
@@ -86,7 +95,7 @@ class ThreeCarsGenerator(gym.Env):
         new_spawn= np.array([[1,1,0]])
     if action ==7:
         new_spawn= np.array([[1,1,1]])
-            
+
     self.state[:-1] = np.concatenate((new_spawn,self.state[0:-2]))
     
     predicted_difficulty = self.sensor.predict(np.reshape(self.state, (1, 6, 3)))

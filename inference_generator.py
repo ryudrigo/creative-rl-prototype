@@ -73,5 +73,5 @@ def infer_with_sensor():
 ################################## MAIN ########################################
 
 if __name__ == '__main__':    
-   infer(render=True, trials=5)
-   #infer_with_sensor()
+   #infer(render=True, trials=5)
+   infer_with_sensor()
