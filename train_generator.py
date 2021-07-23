@@ -19,7 +19,7 @@ def train_generator():
     
     env = make_vec_env(env_name, n_envs=num_cpu)
     env = VecMonitor(env, log_path)
-    model = DQN('MlpPolicy', env, verbose=0, tensorboard_log="./runs")
+    model = DQN('MlpPolicy', env, verbose=0, tensorboard_log="./runs", device = 'cpu', gamma=0.8)
     
     eval_callback = EvalCallback(env, best_model_save_path=save_path,        log_path=log_path, eval_freq=500, deterministic=True, render=False)
     

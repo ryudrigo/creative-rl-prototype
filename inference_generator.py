@@ -36,13 +36,16 @@ def infer(sensor = None, trials=1, render=False):
         total_predictions=0
         predictions_counter=0        
         generator_dones=False
-        while not dones:        
+        while not dones:
             player_action, _states = player_agent.predict(obs)
             generator_action =generator_agent.predict(obs)[0]
             
             if render:
                 viewer.imshow(env.render())
                 time.sleep(0.05)
+                #to record a video:
+                #if total_steps ==0:
+                #    time.sleep(10)
             if debug:
                 print ('player_action', player_action)
                 print ('generator_action', generator_action)
@@ -73,5 +76,5 @@ def infer_with_sensor():
 ################################## MAIN ########################################
 
 if __name__ == '__main__':    
-   #infer(render=True, trials=5)
-   infer_with_sensor()
+   infer(render=True, trials=5)
+   #infer_with_sensor()
